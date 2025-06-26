@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+    dbpg:
+        container_name: dbpg-web-node
+        image: postgres:16.9-bullseye
+        restart: always
+        environment:
+          - PGUSER=${PGUSER}
+          - PGRPASSWORD=${PGPASSWORD}
+        ports:
+          - "${PGPORT}:${PGPORT}"
+        volumes: 
+          - ./src/sql/.:/docker-entrypoint-initdb.d/.
+    web-node:
+        container_name: web-node
+        build:
+          context: .
+          dockerfile: Dockerfile.web-node
+        expose:
+          - "${APP_PORT}"
+        ports:
+          - "${APP_PORT}:${APP_PORT}" 
+        depends_on:
+          - dbpg-web-node
+        restart: always

@@ -1,0 +1,4 @@
+node_modules/*
+.env
+Dockerfile.web-node-dev
+docker-compose-dev.yml
