@@ -1,12 +1,11 @@
-version: '3.8'
 services:
     dbpg:
         container_name: dbpg-web-node
         image: postgres:16.9-bullseye
         restart: always
         environment:
-          - PGUSER=${PGUSER}
-          - PGRPASSWORD=${PGPASSWORD}
+          - POSTGRES_USER=${PGUSER}
+          - POSTGRES_PASSWORD=${PGPASSWORD}
         ports:
           - "${PGPORT}:${PGPORT}"
         volumes: 
@@ -16,10 +15,12 @@ services:
         build:
           context: .
           dockerfile: Dockerfile.web-node
+        env_file:
+          - .env
         expose:
           - "${APP_PORT}"
         ports:
           - "${APP_PORT}:${APP_PORT}" 
         depends_on:
-          - dbpg-web-node
+          - dbpg
         restart: always
