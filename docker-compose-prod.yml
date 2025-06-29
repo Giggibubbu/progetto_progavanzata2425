@@ -1,15 +1,17 @@
 services:
     dbpg:
         container_name: dbpg-web-node
-        image: postgres:16.9-bullseye
+        image: postgis/postgis:16-master
         restart: always
         environment:
-          - POSTGRES_USER=${PGUSER}
-          - POSTGRES_PASSWORD=${PGPASSWORD}
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+          - APPDBUSER=${APPDBUSER}
+          - APPDBUSERPASSWORD=${APPDBUSERPASSWORD}
         ports:
           - "${PGPORT}:${PGPORT}"
         volumes: 
-          - ./src/sql/.:/docker-entrypoint-initdb.d/.
+          - ./sql/.:/docker-entrypoint-initdb.d/.
     web-node:
         container_name: web-node
         build:
