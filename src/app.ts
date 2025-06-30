@@ -1,14 +1,16 @@
 import express from "express";
-import { PORT } from "./utils/AppParameters"
+import { AppParameters } from "./utils/AppParameters"
+import { UserDAO } from "./dao/UserDAO";
 
 const app = express();
 
-app.get('/', (req, res) => {
-  console.log("Ehhhhcccheeeeeehhhhhhaoooooooohhhh")
-  console.log(`Server running on http://localhost:${PORT}`)
+app.get('/', async (req, res) => {
   res.send('Hello World')
+  const userDAO = new UserDAO();
+  const users = await userDAO.readAll();
+  console.log('Users fetched:', users);
 })
 
-app.listen(PORT, () => {
-  //console.log(`${process.env.APP_PORT}`);
+app.listen(AppParameters.APP_PORT, () => {
+  console.log(`Server running on http://localhost:${AppParameters.APP_PORT}`);
 });
