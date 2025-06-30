@@ -197,8 +197,8 @@ export class OrmModels
     User.hasMany(NoNavigationZone, { as: "no_navigation_zones", foreignKey: "operator_id"});
     
     return {
-        navigation_request: NavigationPlanRequest,
-        no_navigation_zone: NoNavigationZone,
+        navigationRequest: NavigationPlanRequest,
+        noNavigationZone: NoNavigationZone,
         user: User,
     };
   }
